@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Oct  4 16:50:14 2020
+Created on Sun Oct 11 07:17:36 2020
 
-@author: joshu
+@author: ivan-
 """
+
 
 import numpy as np
 from numpy import pi, log10, sqrt
@@ -17,8 +18,9 @@ copResis = 1.69e-8  # Ohm*m
 bw = 10e6  # Hertz
 
 # Input Coil Parameters
-coilDia = 0.1  # m
-wireDia = 1e-3  # m
+coil_side = 0.1  # m
+wire_dia = 1e-3 # m
+wire_width = 1e-2;
 omega = 1e8  # rad/s - resonant radial frequency
 netImp = 50  # Ohm - impedance to match
 
@@ -32,9 +34,9 @@ netImp = 50  # Ohm - impedance to match
 # Coil properties
 copSkin = sqrt(2 * copResis / (mu_0 * omega))  # m - AC skin depth
 
-# for wire
-induc = mu_0 * coilDia / 2 * (log10(8 * coilDia / wireDia) - 2)  # H - coil inductance
-resis = coilDia * copResis / (wireDia * copSkin)  # Ohm - coil resistance
+# for foil
+induc = (mu_0 / pi) * (- 4*coil_side + 2*coil_side*sqrt(2) - 2*coil_side*log10(1 + sqrt(2)) + 2*coil_side*log10(4*coil_side/wire_dia))  # H - coil inductance
+resis = 4 * coil_side * copResis / (2 * wire_width * copSkin)  # Ohm - coil resistance
 
 # # for foil
 # resis = pi * coilDia * copResis / (2 * width * copSkin)
