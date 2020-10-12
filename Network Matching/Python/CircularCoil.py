@@ -17,12 +17,15 @@ copResis = 1.69e-8  # Ohm*m
 bw = 10e6  # Hertz
 
 # Input Coil Parameters
-coilDia = 0.1  # m
-wireDia = 1e-3  # m
-omega = 1e8  # rad/s - resonant radial frequency
-netImp = 50  # Ohm - impedance to match
 
-#
+coilDia = 0.113                                                             # m
+wireDia = 4.02e-4                                                              # m
+omega   = 2*pi*2.98e8                                                               # rad/s - resonant radial frequency
+netImp  = 50                                                                # Ohm - impedance to match
+
+width   = 0.03                                                              # m
+
+#%%
 
 # Derived values
 
@@ -33,11 +36,11 @@ netImp = 50  # Ohm - impedance to match
 copSkin = sqrt(2 * copResis / (mu_0 * omega))  # m - AC skin depth
 
 # for wire
-induc = mu_0 * coilDia / 2 * (log10(8 * coilDia / wireDia) - 2)  # H - coil inductance
-resis = coilDia * copResis / (wireDia * copSkin)  # Ohm - coil resistance
+induc = mu_0 * coilDia / 2 * (log10(8 * coilDia / wireDia) - 2)             # H - coil inductance
+# resis = coilDia * copResis / (wireDia * copSkin)                            # Ohm - coil resistance
 
 # # for foil
-# resis = pi * coilDia * copResis / (2 * width * copSkin)
+resis = pi * coilDia * copResis / (2 * width * copSkin)
 
 # Resonant capacitance
 #
@@ -92,3 +95,5 @@ plt.plot(omegas, impeds.imag, '--', label='Reactance')
 plt.xlabel('Frequency (rad/s)')
 plt.ylabel('Resistance (Ohms)')
 plt.legend()
+
+print(f'Resistance: {resis}\nInductance: {induc}\nResonant Capacitor: {capEq}\nParallel Capacitor: {capPar}')
